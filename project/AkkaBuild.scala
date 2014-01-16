@@ -151,6 +151,7 @@ object AkkaBuild extends Build {
       // to fix scaladoc generation
       fullClasspath in doc in Compile <<= fullClasspath in Compile,
       libraryDependencies ++= Dependencies.actor,
+      libraryDependencies += ("org.scala-lang" % "scala-reflect" %  scalaVersion.value),
       previousArtifact := akkaPreviousArtifact("akka-actor")
     )
   )
@@ -187,6 +188,7 @@ object AkkaBuild extends Build {
     settings = defaultSettings ++ formatSettings ++ scaladocSettings  ++ Seq(
       publishArtifact in Compile := false,
       libraryDependencies ++= Dependencies.actorTests,
+      libraryDependencies += excludeOldModules("org.scala-lang" % "scala-compiler" % scalaVersion.value),
       testOptions += Tests.Argument(TestFrameworks.JUnit, "-v", "-a"),
       reportBinaryIssues := () // disable bin comp check
     )
